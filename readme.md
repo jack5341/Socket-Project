@@ -12,7 +12,6 @@
 	  });
 	});
 </pre>
----
 
 ### How does work
 
