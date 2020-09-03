@@ -16,7 +16,7 @@
 
 ### How does work
 
-> Display one,> Display two.
+> Display one> Display two.
 
 ![](https://github.com/jack5341/Socket-Project/blob/master/images/imageOne.PNG) ![](https://github.com/jack5341/Socket-Project/blob/master/images/imageTwo.PNG)
 
