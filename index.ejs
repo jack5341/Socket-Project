@@ -124,19 +124,23 @@
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
     <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
     <script>
+      // input for username
+      const username = prompt("Enter your username: ")
+
       $(function () {
         var socket = io();
         $('form').submit(function(){
           if($('#m').val() == ""){
             return false;            
           }else{
-            socket.emit('chat message', $('#m').val());
+            // we take our input for see in chatbox
+            socket.emit('chat message',`${username}: ` + $('#m').val());
             $('#m').val('');
             return false;
           }
         });
         socket.on('chat message', function(msg){
-          $('#messages').append($('<li>').text( "Unknown: " + msg));
+          $('#messages').append($('<li>').text(msg));
           window.scrollTo(0, document.body.scrollHeight);
         });
       });
