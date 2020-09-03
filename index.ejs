@@ -1,0 +1,150 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Socket</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body { 
+        font: 13px Helvetica, Arial;
+        }
+
+      .mytext{
+      border:0;padding:10px 0 0 0;background:whitesmoke;
+      }
+      .text{
+          width:100%;display:flex;flex-direction:column;
+      }
+      .text > p:first-of-type{
+          width:100%;margin-top:0;margin-bottom:auto;line-height: 13px;font-size: 12px;
+      }
+      .text > p:last-of-type{
+          width:100%;text-align:right;color:silver;margin-bottom:-7px;margin-top:auto;
+      }
+      .text-l{
+          float:left;padding-right:10px;
+      }        
+      .text-r{
+          float:right;padding-left:10px;
+      }
+      .avatar{
+          display:flex;
+          justify-content:center;
+          align-items:center;
+          width:25%;
+          float:left;
+          padding-right:10px;
+      }
+      .macro{
+          width:85%;padding:5px;display:flex;
+      }
+      .msj-rta{
+          float:right;background:whitesmoke;
+      }
+      .msj{
+          float:left;background:white;
+      }
+      .frame{
+          background:#e0e0de;
+          height:450px;
+          overflow:hidden;
+          padding:0;
+      }
+      .frame > div:last-of-type{
+          position:absolute;bottom:0;width:100%;display:flex;
+      }
+      body > div > div > div:nth-child(2) > span{
+          background: whitesmoke;padding: 10px;font-size: 21px;border-radius: 50%;
+      }
+      body > div > div > div.msj-rta.macro{
+          margin:auto;margin-left:1%;
+      }
+      ul {
+          width:100%;
+          list-style-type: none;
+          position:absolute;
+          bottom:0px;
+          display:flex;
+          flex-direction: column;
+          top:0;
+          overflow-y:scroll;
+      }
+
+      li {
+        padding:10px;
+        background-color: whitesmoke;
+      }
+
+      .msj:before{
+          width: 0;
+          height: 0;
+          content:"";
+          top:-5px;
+          left:-14px;
+          position:relative;
+          border-style: solid;
+          border-width: 0 13px 13px 0;
+          border-color: transparent #ffffff transparent transparent;            
+      }
+      .msj-rta:after{
+          width: 0;
+          height: 0;
+          content:"";
+          top:-5px;
+          left:14px;
+          position:relative;
+          border-style: solid;
+          border-width: 13px 13px 0 0;
+          border-color: whitesmoke transparent transparent transparent;           
+      }  
+    </style>
+  </head>
+  <body>
+    <div class="col-sm-3 col-sm-offset-4 frame">
+      <ul id="messages">
+      </ul>
+      <div>
+
+      <form style="height: 50px;width: 100%;background:whitesmoke !important">
+        <div class="msj-rta macro">                        
+            <div class="text text-r" style="background:whitesmoke !important">
+                <input class="mytext" style="outline: none !important;" id="m" placeholder="Type a message"/>
+            </div>
+        </div>
+        <div style="width: 14%;height: 100%;" class="text-center">
+          <button type="submit" class="border-0" style="outline: none;" href="#">
+            <i style="font-size: 20px;padding-top: 16px;color: initial" class="fas fa-paper-plane"></i>
+          </button>
+        </div> 
+      </form>
+      </div>
+    </div>       
+
+    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+    <script>
+      $(function () {
+        var socket = io();
+        $('form').submit(function(){
+          if($('#m').val() == ""){
+            return false;            
+          }else{
+            socket.emit('chat message', $('#m').val());
+            $('#m').val('');
+            return false;
+          }
+        });
+        socket.on('chat message', function(msg){
+          $('#messages').append($('<li>').text( "Unknown: " + msg));
+          window.scrollTo(0, document.body.scrollHeight);
+        });
+      });
+    </script>
+    <script>
+    </script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+  </body>
+</html>
